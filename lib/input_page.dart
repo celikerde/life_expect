@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:life_expectancy/constants.dart';
 import 'package:life_expectancy/gender_info.dart';
 import 'package:life_expectancy/my_container.dart';
 
@@ -14,6 +15,8 @@ class _InputPageState extends State<InputPage> {
   String? choosedGender;
   double cigaretteCount = 0;
   double sportDays = 0;
+  int height = 170;
+  int weight = 70;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,15 +31,13 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: MyContainer(),
+                  child: MyContainer(
+                    child: changeBodyUnit(unitName: "HEIGHT"),
+                  ),
                 ),
                 Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                  child: MyContainer(
+                    child: changeBodyUnit(unitName: "WEIGHT"),
                   ),
                 ),
               ],
@@ -50,10 +51,7 @@ class _InputPageState extends State<InputPage> {
                   Text('How many days are you doing sport in a week?'),
                   Text(
                     '${sportDays.toInt()}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
-                    ),
+                    style: kTextStyle,
                   ),
                   Slider(
                     activeColor: Colors.blue,
@@ -79,10 +77,7 @@ class _InputPageState extends State<InputPage> {
                   Text('How many cigarettes are you smoked in one day?'),
                   Text(
                     '${cigaretteCount.toInt()}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blue,
-                    ),
+                    style: kTextStyle,
                   ),
                   Slider(
                     activeColor: Colors.blue,
@@ -139,6 +134,78 @@ class _InputPageState extends State<InputPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Row changeBodyUnit({required String unitName}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RotatedBox(
+            quarterTurns: -1,
+            child: Text(
+              unitName,
+              style: kTextStyle,
+            )),
+        RotatedBox(
+          quarterTurns: 3,
+          child: Text(
+            unitName == "HEIGHT" ? height.toString() : weight.toString(),
+            style: kTextStyle,
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ButtonTheme(
+                minWidth: 36,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.lightBlue)),
+                  onPressed: () {
+                    setState(() {
+                      if (unitName == 'HEIGHT')
+                        height++;
+                      else
+                        weight++;
+                    });
+                  },
+                  child: FaIcon(
+                    FontAwesomeIcons.plus,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: ButtonTheme(
+                minWidth: 36,
+                child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                      color: Colors.lightBlue,
+                    )),
+                    onPressed: () {
+                      setState(() {
+                        if (unitName == 'HEIGHT')
+                          height--;
+                        else {
+                          weight--;
+                        }
+                      });
+                    },
+                    child: FaIcon(
+                      FontAwesomeIcons.minus,
+                      size: 16,
+                    )),
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 }
