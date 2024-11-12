@@ -12,6 +12,8 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   String? choosedGender;
+  double cigaretteCount = 0;
+  double sportDays = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +22,7 @@ class _InputPageState extends State<InputPage> {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
@@ -39,8 +42,64 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Expanded(child: MyContainer()),
-          Expanded(child: MyContainer()),
+          Expanded(
+            child: MyContainer(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('How many days are you doing sport in a week?'),
+                  Text(
+                    '${sportDays.toInt()}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Slider(
+                    activeColor: Colors.blue,
+                    min: 0,
+                    max: 7,
+                    value: sportDays,
+                    divisions: 7,
+                    onChanged: (newValue) {
+                      setState(() {
+                        sportDays = newValue;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: MyContainer(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('How many cigarettes are you smoked in one day?'),
+                  Text(
+                    '${cigaretteCount.toInt()}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Slider(
+                    activeColor: Colors.blue,
+                    min: 0,
+                    max: 30,
+                    value: cigaretteCount,
+                    divisions: 30,
+                    onChanged: (newValue) {
+                      setState(() {
+                        cigaretteCount = newValue;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
           Expanded(
             child: Row(
               children: [
