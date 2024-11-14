@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:life_expectancy/constants.dart';
 import 'package:life_expectancy/gender_info.dart';
 import 'package:life_expectancy/my_container.dart';
+import 'package:life_expectancy/result_page.dart';
+import 'package:life_expectancy/user_data.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -84,7 +86,6 @@ class _InputPageState extends State<InputPage> {
                     min: 0,
                     max: 30,
                     value: cigaretteCount,
-                    divisions: 30,
                     onChanged: (newValue) {
                       setState(() {
                         cigaretteCount = newValue;
@@ -132,6 +133,31 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                final userData = UserData(
+                  choosedGender: choosedGender,
+                  cigaretteCount: cigaretteCount,
+                  sportDays: sportDays,
+                  height: height,
+                  weight: weight,
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultPage(userData: userData)),
+                );
+              },
+              child: Center(
+                child: Text(
+                  'Calculate',
+                  style: kTextStyle,
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -202,7 +228,7 @@ class _InputPageState extends State<InputPage> {
                       size: 16,
                     )),
               ),
-            )
+            ),
           ],
         )
       ],
